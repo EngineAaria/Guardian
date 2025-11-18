@@ -1,510 +1,312 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Aaria — Your Trusted Property Guardian</title>
-  <meta name="description" content="Aaria — AI Property Guardian. Private verified matches, chat + voice assistant, automated verified PDF reports. Safe property buying in Kanpur." />
-  <meta name="author" content="Aaria Realty / Engine Aaria" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Open Graph for social previews -->
-  <meta property="og:title" content="Aaria — Your Trusted Property Guardian" />
-  <meta property="og:description" content="Aaria is a motherly AI guardian for property buyers. Private verified matches, chat & voice, PDF safety reports." />
-  <meta property="og:image" content="aarialogo.png" />
-  <meta property="og:type" content="website" />
+<title>Aaria — Your Trusted Property Guardian</title>
+<meta name="description" content="Aaria is your trusted, motherly real estate guardian that verifies every property and protects every decision. Safe, clear and private property matching for Kanpur buyers." />
 
-  <!-- Schema.org structured data: Organization + SoftwareApplication (simple) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "name": "Aaria",
-        "url": "https://engineaaria.github.io/Guardian/",
-        "logo": "https://engineaaria.github.io/Guardian/aarialogo.png",
-        "sameAs": []
-      },
-      {
-        "@type": "SoftwareApplication",
-        "name": "Aaria — Property Guardian",
-        "operatingSystem": "Web",
-        "applicationCategory": "FinanceApplication",
-        "description": "AI guardian that verifies properties and provides private, verified matches to buyers.",
-        "url": "https://engineaaria.github.io/Guardian/"
-      }
-    ]
-  }
-  </script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+/* ------------------------------
+   GLOBAL STYLES
+--------------------------------*/
+body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    background: #F8F9F4;
+    color: #123;
+    overflow-x: hidden;
+}
 
-  <!-- jsPDF for PDF generation -->
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+h1, h2, h3 {
+    font-family: 'Montserrat', sans-serif;
+}
 
-  <style>
-    /* ------------------------
-       Guardian Aaria — Styles
-       Mobile-first responsive
-    -------------------------*/
-    :root{
-      --teal: #0C3C44;         /* Guardian Deep Teal (primary) */
-      --emerald: #1E6F5C;      /* Emerald Trust Green (accent) */
-      --slate: #2E3E42;        /* Slate protection grey (text) */
-      --gold: #D6A23D;         /* Warm guardian gold (highlights) */
-      --ivory: #F8F9F4;        /* Soft ivory background */
-      --muted: #6b7276;
-      --card-shadow: 0 10px 30px rgba(12,60,68,0.08);
-      --border-radius: 14px;
-    }
-    html,body{margin:0;padding:0;background:var(--ivory);color:var(--slate);font-family:'Open Sans',sans-serif;-webkit-font-smoothing:antialiased}
-    a{color:inherit}
-    .container{max-width:1100px;margin:0 auto;padding:16px}
+section {
+    padding: 70px 20px;
+}
 
-    /* Header */
-    header{display:flex;align-items:center;gap:12px;padding:16px;border-bottom-left-radius:18px;border-bottom-right-radius:18px;background:linear-gradient(135deg,var(--teal),var(--emerald));color:white}
-    .logo{width:52px;height:52px;border-radius:10px;background:white;padding:6px;object-fit:contain}
-    .brand-name{font-family:'Montserrat',sans-serif;font-weight:700;font-size:18px}
-    .brand-sub{font-size:12px;opacity:0.95;margin-top:2px}
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
 
-    /* HERO */
-    .hero{padding:22px 16px 34px;color:white;text-align:left}
-    .hero h1{font-family:'Montserrat',sans-serif;font-size:24px;margin:6px 0 8px}
-    .hero p.lead{font-size:15px;line-height:1.45;opacity:0.95;margin:0 0 14px}
-    .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
-    .btn{padding:12px 16px;border-radius:12px;border:0;font-weight:600;cursor:pointer}
-    .btn-primary{background:var(--gold);color:var(--teal)}
-    .btn-outline{background:transparent;border:2px solid rgba(255,255,255,0.18);color:white}
+.btn-primary {
+    padding: 14px 24px;
+    background: #0C3C44;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    transition: 0.3s;
+}
+.btn-primary:hover {
+    background: #1E6F5C;
+}
 
-    .micro-note{font-size:13px;color:rgba(255,255,255,0.95);margin-top:8px;opacity:0.95}
+.btn-secondary {
+    padding: 12px 22px;
+    background: transparent;
+    color: #0C3C44;
+    border: 2px solid #0C3C44;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 10px;
+    display: inline-block;
+    transition: 0.3s;
+}
+.btn-secondary:hover {
+    background: #0C3C44;
+    color: #fff;
+}
 
-    /* Layout cards */
-    section {padding:18px 0}
-    .grid{display:grid;gap:14px}
-    .cols-2{grid-template-columns:1fr; } /* mobile default */
-    .card{background:white;border-radius:var(--border-radius);padding:16px;box-shadow:var(--card-shadow)}
-    .card h3{margin:0 0 8px;font-size:16px}
-    .muted{color:var(--muted);font-size:14px}
+/* ------------------------------
+   HERO SECTION
+--------------------------------*/
+.hero {
+    background: linear-gradient(135deg, #0C3C44, #1E6F5C);
+    color: #fff;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    padding: 100px 20px 120px;
+    text-align: center;
+    position: relative;
+}
 
-    /* larger screens */
-    @media(min-width:760px){
-      .cols-2{grid-template-columns:1fr 1fr}
-      .hero{padding:36px 40px 54px}
-      .hero h1{font-size:34px}
-      .hero p.lead{font-size:17px}
-    }
+.hero h1 {
+    font-size: 34px;
+    font-weight: 700;
+}
 
-    /* Tools row */
-    .tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    .tool{padding:10px 12px;border-radius:10px;border:1px solid #e6e6e6;background:white;cursor:pointer;font-weight:600}
+.hero p {
+    font-size: 18px;
+    margin: 10px 0 30px;
+}
 
-    /* Chat widget: mobile full-width bottom, desktop fixed small */
-    .chat-launch{position:fixed;right:16px;bottom:18px;z-index:1400;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
-    .chat-fab{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;background:var(--gold);color:var(--teal);font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,0.12);cursor:pointer}
-    .chat-window{width:360px;max-width:calc(100vw - 28px);height:540px;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;background:white;box-shadow:0 20px 50px rgba(12,60,68,0.12)}
-    .chat-header{background:linear-gradient(135deg,var(--emerald),var(--teal));color:white;padding:12px;display:flex;align-items:center;gap:10px}
-    .chat-body{flex:1;padding:12px;overflow:auto;background:linear-gradient(180deg,#fbfcfb,#fff)}
-    .chat-controls{display:flex;gap:8px;padding:10px;border-top:1px solid #f1f1f1;align-items:center}
-    .msg-row{display:flex;gap:8px;margin:8px 0}
-    .bubble{padding:10px 12px;border-radius:12px;max-width:78%}
-    .bubble.ai{background:#f6faf8;color:var(--slate);box-shadow:0 6px 18px rgba(12,60,68,0.04)}
-    .bubble.user{background:var(--emerald);color:#fff;align-self:flex-end}
+/* ------------------------------
+   ICON CARDS
+--------------------------------*/
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+    gap: 25px;
+    margin-top: 40px;
+}
 
-    /* footer */
-    footer{background:transparent;padding:20px 0;text-align:center;color:var(--muted);font-size:13px}
+.feature-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: 0.3s;
+}
+.feature-card:hover {
+    transform: translateY(-8px);
+}
 
-    /* small helpers */
-    .center{text-align:center}
-    .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#fff;color:var(--teal);font-weight:700;border:1px solid rgba(12,60,68,0.06)}
-    .kicker{font-size:13px;color:var(--muted);margin-bottom:6px}
-    .sample-pdf{width:100%;border-radius:10px;object-fit:cover}
-  </style>
+.feature-card img {
+    width: 60px;
+    margin-bottom: 15px;
+}
+
+/* ------------------------------
+   HOW IT WORKS
+--------------------------------*/
+.steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+    gap: 20px;
+}
+
+.step-box {
+    background: #fff;
+    padding: 25px;
+    border-radius: 18px;
+    text-align: center;
+    border-left: 5px solid #1E6F5C;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+}
+
+/* ------------------------------
+   VERIFIED BADGE SECTION
+--------------------------------*/
+.badge-area {
+    background: #fffbe7;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+}
+
+.badge-icon {
+    width: 80px;
+}
+
+/* ------------------------------
+   TESTIMONIALS
+--------------------------------*/
+.testimonial-card {
+    background: #fff;
+    padding: 22px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.testimonial-card h4 {
+    margin-bottom: 5px;
+}
+
+/* ------------------------------
+   FOOTER
+--------------------------------*/
+footer {
+    background: #0C3C44;
+    color: #fff;
+    padding: 50px 20px;
+    margin-top: 80px;
+}
+footer a {
+    color: #D6A23D;
+    text-decoration: none;
+}
+</style>
+
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header role="banner">
-    <div style="display:flex;align-items:center;gap:12px">
-      <img src="aarialogo.png" alt="Aaria logo" class="logo" />
-      <div>
-        <div class="brand-name">Aaria</div>
-        <div class="brand-sub">Your Trusted Property Guardian</div>
-      </div>
-    </div>
-  </header>
-
-  <!-- MAIN -->
-  <main class="container" role="main">
-
-    <!-- HERO -->
-    <section class="hero" aria-labelledby="hero-title">
-      <h1 id="hero-title">Aaria — Your Trusted Property Guardian</h1>
-      <p class="lead">I protect your property decisions with verified insights, motherly care, and private AI guidance. No public listings — only safe, private matches.</p>
-
-      <!-- Hero CTAs: Chat + Talk -->
-      <div class="hero-cta" role="navigation" aria-label="Primary actions">
-        <button id="chatHeroBtn" class="btn btn-primary" aria-label="Chat with Aaria">Chat with Aaria</button>
-        <button id="talkHeroBtn" class="btn btn-outline" aria-label="Talk to Aaria (Voice)">Talk to Aaria (Voice)</button>
-      </div>
-
-      <div class="micro-note">Private • Verified • Motherly guidance • Start a safe consultation anytime</div>
-    </section>
-
-    <!-- MEET AARIA -->
-    <section aria-labelledby="meet-title">
-      <div class="kicker">Meet the guardian</div>
-      <h2 id="meet-title">Meet Aaria — Your AI Guardian Who Cares Like Family</h2>
-      <p class="muted">Aaria is an AI agent who chats, talks, verifies, and creates private PDF safety reports. She works quietly — verifying ownership, disputes, records and pricing — and shares only safe matches, privately with you.</p>
-    </section>
-
-    <!-- VERIFICATION FRAMEWORK -->
-    <section aria-labelledby="verify-title">
-      <div class="kicker">Our promise</div>
-      <h2 id="verify-title">How Aaria Protects You — 5-Point Guardian Check</h2>
-
-      <div class="grid cols-2" style="margin-top:12px">
-        <div class="card">
-          <h3>1. Ownership Verification</h3>
-          <p class="muted">We confirm the owner and chain of title before recommending a property.</p>
-        </div>
-        <div class="card">
-          <h3>2. Dispute Screening</h3>
-          <p class="muted">Clearance checks for legal notices, pending disputes, or government claims.</p>
-        </div>
-        <div class="card">
-          <h3>3. Land-Record Match</h3>
-          <p class="muted">We match survey numbers and registry entries to avoid hidden surprises.</p>
-        </div>
-        <div class="card">
-          <h3>4. Price Benchmarking</h3>
-          <p class="muted">We compare against sold data and circle rates to assess fairness.</p>
-        </div>
-        <div class="card">
-          <h3>5. Neighbourhood & Growth</h3>
-          <p class="muted">Future infrastructure, appreciation trends and local context considered.</p>
-        </div>
-        <div class="card">
-          <h3>Only Verified Matches — Never Public</h3>
-          <p class="muted">Aaria never publishes property listings. She shares private, verified matches only with interested buyers.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- TOOLS (DEMO) -->
-    <section aria-labelledby="tools-title">
-      <div class="kicker">Guardian Tools</div>
-      <h2 id="tools-title">Aaria’s Tools (Live Demo)</h2>
-      <p class="muted">Try the same tools Aaria uses to protect your decision. These are demo versions — your actual matches are private and verified.</p>
-
-      <div style="margin-top:12px" class="card">
-        <div>
-          <button class="tool" id="btnQuickVerify" aria-label="Quick Verify">Quick Verify</button>
-          <button class="tool" id="btnPriceBench" aria-label="Price Benchmark">Price Benchmark</button>
-          <button class="tool" id="btnRiskScan" aria-label="Risk Scan">Risk Scan</button>
-          <button class="tool" id="btnGeneratePDF" aria-label="Generate Safety PDF">Generate PDF Report</button>
-        </div>
-
-        <pre id="toolOutput" style="margin-top:14px;white-space:pre-wrap;background:#fbfbfb;padding:12px;border-radius:10px;border:1px solid #f1f1f1" aria-live="polite">Tool output will appear here.</pre>
-      </div>
-    </section>
-
-    <!-- CHAT + VOICE CTA REMINDER -->
-    <section aria-labelledby="chat-title">
-      <div class="grid cols-2">
-        <div class="card">
-          <h3 id="chat-title">Talk or Chat — Aaria is ready</h3>
-          <p class="muted">Use the hero buttons or the chat widget to start a private conversation. Aaria can speak, listen, and prepare a detailed PDF safety report for you.</p>
-          <div style="margin-top:10px">
-            <button class="tool" id="btnTryChat">Open Chat</button>
-            <button class="tool" id="btnTryVoice">Start Voice (Demo)</button>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Why No Public Listings?</h3>
-          <p class="muted">Public listings expose buyers to fake deals and disputed plots. Aaria removes the noise — she only shares safe matches privately, after full checks.</p>
-          <div style="margin-top:8px"><span class="badge">Private Matches</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SELLERS -->
-    <section aria-labelledby="seller-title">
-      <h2 id="seller-title">For Sellers & Developers</h2>
-      <p class="muted">List privately with Aaria and reach verified, trustful buyers who value transparent, safe transactions. Reduce time-to-sale and enjoy smoother closings.</p>
-      <div style="margin-top:10px">
-        <button class="tool" id="btnListPrivate">List Your Property Privately</button>
-      </div>
-    </section>
-
-    <!-- TESTIMONIALS -->
-    <section aria-labelledby="testi-title">
-      <h2 id="testi-title">What Buyers Say</h2>
-      <div class="grid cols-2" style="margin-top:12px">
-        <div class="card">
-          <strong>Rahul V. (Kanpur)</strong>
-          <p class="muted">“Aaria protected us from a disputed plot. The PDF report made our decision easy — no surprises.”</p>
-        </div>
-        <div class="card">
-          <strong>Priya S. (NRI)</strong>
-          <p class="muted">“I trusted Aaria for peace of mind. She guided me gently and clearly.”</p>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- CHAT LAUNCHER -->
-  <div class="chat-launch" id="chatRoot" aria-hidden="true">
-    <!-- Floating FAB -->
-    <div id="fabOpen" class="chat-fab" role="button" aria-label="Open Chat with Aaria">
-      <img src="aarialogo.png" alt="" style="width:28px;height:28px;border-radius:6px;background:white;padding:4px"/>
-      <div>Chat with Aaria</div>
-    </div>
-
-    <!-- Chat window (hidden initially) -->
-    <div id="chatWindow" class="chat-window" style="display:none" role="dialog" aria-modal="true" aria-labelledby="ariaChatTitle">
-      <div class="chat-header">
-        <img src="aarialogo.png" alt="Aaria logo" style="width:46px;height:46px;border-radius:8px;background:white;padding:6px"/>
-        <div id="ariaChatTitle" style="font-weight:700">Aaria — Property Guardian</div>
-        <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
-          <button id="voiceHeaderBtn" title="Voice Mode" style="background:transparent;border:0;color:white;cursor:pointer">🎤</button>
-          <button id="closeChatBtn" title="Close chat" style="background:transparent;border:0;color:white;cursor:pointer">✕</button>
-        </div>
-      </div>
-
-      <div class="chat-body" id="chatMessages" aria-live="polite">
-        <!-- initial guardian greeting -->
-        <div class="msg-row"><div class="bubble ai">Hello — I am Aaria, your property guardian. Tell me what you're looking for (budget, area, purpose) and I'll protect your decision.</div></div>
-      </div>
-
-      <div class="chat-controls" role="group" aria-label="Chat controls">
-        <input id="chatInput" type="text" placeholder="Type a message or press the voice button..." aria-label="Type your message" style="flex:1;padding:10px;border-radius:10px;border:1px solid #eaeaea"/>
-        <button id="sendChatBtn" class="tool" aria-label="Send message">Send</button>
-        <button id="micBtn" class="tool" aria-label="Use voice">🎙️</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer>
+<!-- HERO -->
+<section class="hero">
     <div class="container">
-      <div style="font-weight:700">Aaria — Your Trusted Property Guardian</div>
-      <div class="muted" style="margin-top:6px">Kanpur, Uttar Pradesh • Private verified matches • No public listings</div>
-      <div style="margin-top:8px;color:var(--muted)">© <span id="year"></span> Aaria Realty</div>
+        <h1>Aaria — Your Trusted Property Guardian</h1>
+        <p>Every property verified. Every decision protected.<br>Private, safe & motherly guidance for Kanpur buyers.</p>
+        <a class="btn-primary" href="#consult">Start Your Safe Consultation</a>
+        <a class="btn-secondary" href="#verify">How We Verify</a>
     </div>
-  </footer>
+</section>
 
-  <!-- JS: Chat, Voice, Tools, PDF (well-commented for beginners) -->
-  <script>
-    // ======= BASIC SETUP =======
-    document.getElementById('year').innerText = new Date().getFullYear();
+<!-- WHY AARIA -->
+<section>
+    <div class="container">
+        <h2>Why Aaria Exists</h2>
+        <p>
+            The property world is full of fraud, disputed land, fake listings, and pressure.  
+            Aaria stands as a *motherly guardian* who ensures your decisions are safe, verified, and stress-free.
+        </p>
 
-    // Helper shortcut
-    const $ = id => document.getElementById(id);
+        <div class="features">
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/942/942748.png">
+                <h3>Verified Property Intelligence</h3>
+                <p>Aaria checks land records, disputes, encroachment, circle rates & more — quietly protecting you.</p>
+            </div>
 
-    // ======= HERO BUTTONS: Chat & Talk =======
-    $('chatHeroBtn').addEventListener('click', ()=> openChatWindow());
-    $('talkHeroBtn').addEventListener('click', ()=> {
-      openChatWindow();
-      startVoiceRecognition(); // opens chat and starts voice listening
-    });
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/3524/3524659.png">
+                <h3>Private Matching Only</h3>
+                <p>No public listings. Aaria sends you safe options privately after deep verification.</p>
+            </div>
 
-    // also chat open/close FAB
-    $('fabOpen').addEventListener('click', ()=> openChatWindow());
-    $('closeChatBtn').addEventListener('click', closeChatWindow);
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png">
+                <h3>Zero Pressure</h3>
+                <p>Aaria never pushes you to buy. She guides, protects, and supports — just like a mother.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-    function openChatWindow(){
-      $('chatWindow').style.display = 'flex';
-      $('chatRoot').setAttribute('aria-hidden','false');
-      // focus input for easy typing
-      setTimeout(()=> $('chatInput').focus(), 250);
-    }
-    function closeChatWindow(){
-      $('chatWindow').style.display = 'none';
-      $('chatRoot').setAttribute('aria-hidden','true');
-    }
+<!-- HOW IT WORKS -->
+<section id="consult">
+    <div class="container">
+        <h2>How Aaria Works</h2>
+        <div class="steps">
+            <div class="step-box">
+                <h3>1. Share Your Need</h3>
+                <p>Tell Aaria your budget, area preference & purpose.</p>
+            </div>
 
-    // ======= SIMPLE CHAT LOGIC (DEMO) =======
-    const chatMessages = $('chatMessages');
+            <div class="step-box">
+                <h3>2. Aaria Verifies Everything</h3>
+                <p>Land records, disputes, ownership, pricing — all checked.</p>
+            </div>
 
-    // push a message (ai or user)
-    function pushChat(text, who='ai'){
-      const row = document.createElement('div');
-      row.className = 'msg-row';
-      const bubble = document.createElement('div');
-      bubble.className = 'bubble ' + (who==='ai'?'ai':'user');
-      bubble.innerText = text;
-      row.appendChild(bubble);
-      chatMessages.appendChild(row);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-      if(who==='ai') speakText(text); // speak AI replies
-    }
+            <div class="step-box">
+                <h3>3. Private Safe Matches</h3>
+                <p>You receive 3–5 verified matches privately on WhatsApp.</p>
+            </div>
 
-    // Demo AI responder (replaceable with backend later)
-    async function demoAiReply(input){
-      const txt = input.toLowerCase();
-      if(txt.includes('verify') || txt.includes('check')) return 'I will run my Guardian verification: ownership, disputes, land-records and price benchmarking. Shall I generate a PDF safety report?';
-      if(txt.includes('pdf') || txt.includes('report')) return 'I will prepare a private PDF safety report summarizing verification and suggested next steps. Please confirm property address or survey number.';
-      if(txt.includes('price')) return 'Price benchmark: median local sold price is ₹3,200 / sq.ft — asking seems reasonable. I recommend a detailed local survey.';
-      if(txt.includes('hello') || txt.includes('hi')) return 'Hello — tell me your budget, preferred area, and if this is for home or investment.';
-      // default:
-      return 'Got it. I will privately check my verified data and prepare a safety summary. Reply with "verify", "price", or "report" to proceed.';
-    }
+            <div class="step-box">
+                <h3>4. Visit & Decide</h3>
+                <p>Zero pressure. Aaria supports you like a guardian.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-    // send chat on Send button or Enter
-    $('sendChatBtn').addEventListener('click', async ()=>{
-      const txt = $('chatInput').value.trim();
-      if(!txt) return;
-      pushChat(txt, 'user');
-      $('chatInput').value = '';
-      pushChat('Thinking...', 'ai');
-      const ai = await demoAiReply(txt);
-      // remove last "Thinking..." bubble (simple)
-      const ais = chatMessages.querySelectorAll('.bubble.ai');
-      if(ais.length) {
-        const last = ais[ais.length-1];
-        if(last && last.innerText==='Thinking...') last.parentElement.remove();
-      }
-      pushChat(ai, 'ai');
-    });
+<!-- VERIFICATION BADGE -->
+<section id="verify">
+    <div class="container">
+        <div class="badge-area">
+            <img class="badge-icon" src="https://cdn-icons-png.flaticon.com/512/609/609803.png">
+            <h2>The Aaria Verification Framework</h2>
+            <p>Only properties that pass ALL 5 checks are recommended:</p>
+            <ul>
+                <li>✔ Ownership Verification</li>
+                <li>✔ Dispute Screening</li>
+                <li>✔ Land Record Match</li>
+                <li>✔ Price Benchmarking</li>
+                <li>✔ Neighbourhood & Growth Study</li>
+            </ul>
+        </div>
+    </div>
+</section>
 
-    $('chatInput').addEventListener('keydown', (e)=>{
-      if(e.key==='Enter'){ e.preventDefault(); $('sendChatBtn').click(); }
-    });
+<!-- TESTIMONIALS -->
+<section>
+    <div class="container">
+        <h2>What Buyers Say</h2>
 
-    // ======= VOICE INPUT (SpeechRecognition) + Speech Synthesis =======
-    let recognition, listening=false;
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if(SpeechRecognition){
-      recognition = new SpeechRecognition();
-      recognition.lang = 'en-IN';
-      recognition.interimResults = false;
-      recognition.maxAlternatives = 1;
+        <div class="testimonial-card">
+            <h4>Rahul Verma (Kanpur)</h4>
+            <p>“Aaria felt like a protective elder sister guiding me. Zero pressure, total clarity.”</p>
+        </div>
 
-      recognition.onstart = ()=> {
-        listening=true;
-        pushChat('Listening...', 'ai');
-      };
-      recognition.onerror = (e)=> {
-        listening=false;
-        pushChat('Voice error: ' + (e.error || 'unknown'), 'ai');
-      };
-      recognition.onresult = (evt)=> {
-        listening=false;
-        const spoken = evt.results[0][0].transcript;
-        // remove last "Listening..." then append actual user message
-        const ais = chatMessages.querySelectorAll('.bubble.ai');
-        if(ais.length){
-          const last = ais[ais.length-1];
-          if(last && last.innerText==='Listening...') last.parentElement.remove();
-        }
-        pushChat(spoken, 'user');
-        // get ai reply
-        demoAiReply(spoken).then(reply => pushChat(reply, 'ai'));
-      };
-    }
+        <div class="testimonial-card">
+            <h4>Priya Singh (NRI)</h4>
+            <p>“Finally someone who checks everything before showing anything. Aaria saved me from a disputed plot.”</p>
+        </div>
 
-    // mic buttons
-    $('micBtn').addEventListener('click', ()=> startVoiceRecognition());
-    $('voiceHeaderBtn').addEventListener('click', ()=> startVoiceRecognition());
-    function startVoiceRecognition(){
-      if(!recognition){ pushChat('Voice not supported in this browser. Try Chrome on Android or desktop Chrome.', 'ai'); return; }
-      try{
-        recognition.start();
-      }catch(e){ console.warn(e); }
-    }
+        <div class="testimonial-card">
+            <h4>Harshit & Family</h4>
+            <p>“She acted like a guardian angel. The most emotionally satisfying buying experience ever.”</p>
+        </div>
+    </div>
+</section>
 
-    // Speech synthesis (AI voice)
-    function speakText(txt){
-      if(!('speechSynthesis' in window)) return;
-      try{
-        const u = new SpeechSynthesisUtterance(txt);
-        u.lang = 'en-IN';
-        u.rate = 1;
-        u.pitch = 1;
-        // gentle motherly tone: keep moderate rate/pitch
-        speechSynthesis.cancel();
-        speechSynthesis.speak(u);
-      }catch(e){ console.warn(e); }
-    }
+<!-- SELLER SECTION -->
+<section>
+    <div class="container">
+        <h2>For Sellers & Developers</h2>
+        <p>Aaria connects you with safe, serious buyers who trust the verification process — leading to smoother, faster deals.</p>
+        <a class="btn-primary" href="#">List Your Property Privately</a>
+    </div>
+</section>
 
-    // ======= DEMO TOOLS (Quick verify, price, risk) =======
-    function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <h3>Aaria — Your Trusted Property Guardian</h3>
+        <p>Kanpur, Uttar Pradesh</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Contact</a></p>
+        <p>© 2025 Aaria Realty</p>
+    </div>
+</footer>
 
-    $('btnQuickVerify').addEventListener('click', async ()=>{
-      $('toolOutput').innerText = 'Running quick Guardian verification...';
-      await sleep(900);
-      $('toolOutput').innerText = '✔ Ownership check: OK\n✔ Land-record match: OK\n✔ Dispute scan: Clear\n✔ Price vs circle rate: Within safe band\nAaria recommends private matches. Use chat to request a safety PDF.';
-      pushChat('I ran a quick verification. You can download the safety PDF anytime.', 'ai');
-    });
-
-    $('btnPriceBench').addEventListener('click', async ()=>{
-      $('toolOutput').innerText = 'Analysing local sold data...';
-      await sleep(800);
-      $('toolOutput').innerText = 'Median sold price (1km): ₹3,200 per sq.ft\nAsking price: ₹3,100 per sq.ft\nStatus: Fairly priced.';
-      pushChat('Price benchmarking complete. Asking price seems fair.', 'ai');
-    });
-
-    $('btnRiskScan').addEventListener('click', async ()=>{
-      $('toolOutput').innerText = 'Running risk scan...';
-      await sleep(1100);
-      $('toolOutput').innerText = 'Risk factors: Low\nNotes: Verify original title deed at sub-registrar before final closure.';
-      pushChat('Risk scan finished. Low risk, but verify original deed locally.', 'ai');
-    });
-
-    // ======= PDF generation (jsPDF) =======
-    const { jsPDF } = window.jspdf;
-
-    async function createPdf({customer='Customer', summary='Aaria quick safety report', tools='Tool outputs not available'}){
-      const doc = new jsPDF({format:'a4'});
-      doc.setFontSize(18);
-      doc.setTextColor(12,60,68);
-      doc.text('Aaria — Property Safety Report', 16, 24);
-      doc.setFontSize(11);
-      doc.setTextColor(40,40,40);
-      doc.text(`Prepared for: ${customer}`, 16, 36);
-      doc.text(`Date: ${new Date().toLocaleString()}`, 16, 44);
-      doc.setFontSize(13);
-      doc.setTextColor(12,60,68);
-      doc.text('Summary:', 16, 60);
-      doc.setFontSize(11);
-      const text = summary + '\n\nTool output:\n' + tools;
-      const split = doc.splitTextToSize(text, 170);
-      doc.text(split, 16, 70);
-      doc.setFontSize(9);
-      doc.setTextColor(100);
-      doc.text('Aaria — Your Trusted Property Guardian. Kanpur • Private matches only • No public listings', 16, 280);
-      doc.save('Aaria_SafetyReport_' + Date.now() + '.pdf');
-    }
-
-    // Generate from tools button
-    $('btnGeneratePDF').addEventListener('click', async ()=>{
-      const toolsRes = $('toolOutput').innerText || 'No tool results';
-      await createPdf({customer:'Demo User', summary:'Aaria quick verification completed.', tools:toolsRes});
-      pushChat('PDF safety report generated and downloaded to your device. You can share it privately.', 'ai');
-    });
-
-    // Chat button to generate PDF of conversation
-    // Expose via "Generate PDF" (could be extended)
-    // small helper: collect conversation content
-    function collectConversation(){
-      const nodes = chatMessages.querySelectorAll('.bubble');
-      let conv = '';
-      nodes.forEach(n => conv += n.innerText + '\n\n');
-      return conv;
-    }
-
-    // Expose hero "Start Safe Consultation" improvements (if needed)
-    // For seller list button demo
-    $('btnListPrivate')?.addEventListener('click', ()=> {
-      pushChat('Thanks. To list privately, we will take your contact and property details in a secure chat. Shall we start?', 'ai');
-      openChatWindow();
-    });
-
-    // ======= BEGINNER NOTES (console) =======
-    console.log('Aaria demo loaded. To connect a real AI backend: replace demoAiReply() with fetch() to your server that calls an LLM (OpenAI etc.). For sending PDF via WhatsApp/email, post PDF to your server and use Twilio/WhatsApp Cloud / SMTP.');
-  </script>
 </body>
 </html>
